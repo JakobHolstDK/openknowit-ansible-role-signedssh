@@ -1,0 +1,24 @@
+---
+- name: "setup thinlink "
+  hosts: master
+  tasks:
+  - name: "Apply role"
+    vars:
+      - var1: "test"
+    include_role:
+      name: thinlinc 
+  become: true
+
+
+- name: "Present screendumps"
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: ansible_role_thinlinc | screendump | copy manage screendumps script
+    copy:
+      src: files/screenshots.sh
+      dest: /tmp/screenshots.sh
+      mode: 0755
+
+  - name: ansible_role_thinlinc | screendump | run manage screendump script
+    shell: "bash /tmp/screenshots.sh"

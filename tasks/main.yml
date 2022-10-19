@@ -1,0 +1,5 @@
+---
+- name: ansible-role-thinlinc | install prereq for redhat
+  include: redhat.yml
+- name: ansible-role-thinlinc | install thinlinc
+  include: common.yml

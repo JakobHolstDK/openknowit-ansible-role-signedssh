@@ -1,0 +1,6 @@
+---
+roles:
+   - src: git@github.com:JakobHolstDK/openknowit-ansible-role-signedssh.git
+     scm: git
+     version: "main"
+

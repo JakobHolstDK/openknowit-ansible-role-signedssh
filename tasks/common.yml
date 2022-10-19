@@ -1,0 +1,34 @@
+####################################################
+# What to be done on all distros
+####################################################
+
+- name: ansible_role_thinlinc | common | Copy expect script for intall
+  copy:
+    src: files/install-tl.exp
+    dest: /usr/local/bin/install-tl.exp
+    mode: 700
+  become: yes
+
+- name: ansible_role_thinlinc | common | Get the lates thinlinc package
+  become: yes
+  command: wget "https://www.cendio.com/downloads/server/download.py" -O /tmp/thinlinc.zip
+
+- name: ansible_role_thinlinc | common | unzip the archive
+  become: yes
+  command: chdir=/tmp unzip -o /tmp/thinlinc.zip
+
+- name: ansible_role_thinlinc | common | install tl
+  become: yes
+  command: chdir=/tmp/tl-4.14.0-server /usr/local/bin/install-tl.exp
+
+- name: ansible_role_thinlinc | common | template the config file
+  ansible.builtin.template:
+    src: templates/setup-tl.conf.j2
+    dest: /tmp/setup-tl.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: ansible_role_thinlinc | common | run setup
+  become: yes
+  command: /opt/thinlinc/sbin/tl-setup -a /tmp/setup-tl.conf

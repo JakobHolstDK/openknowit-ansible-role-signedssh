@@ -1,0 +1,23 @@
+####################################################
+# What to be done on all distros
+####################################################
+
+
+- name: ansible_role_thinlinc | common | Copy expect script for intall
+  copy:
+    src: files/framebufferdump.sh
+    dest: /usr/local/bin/frambufferdump.sh
+    mode: 700
+  become: yes
+
+- name: ansible_role_thinlinc | screendump | run framebufferdump
+  become: yes
+  command:  /usr/local/bin/frambufferdump.sh
+
+- name: ansible_role_thinlinc | screendump | fetch the screendumps
+  ansible.builtin.fetch:
+    src: /tmp/screendump.bin
+    dest: /tmp/screendump-{{ inventory_hostname }}.bin
+    flat: yes
+  become: true
+
