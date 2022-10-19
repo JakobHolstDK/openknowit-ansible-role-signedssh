@@ -1,4 +1,4 @@
-# thinlinc
+# Openknowit ansible role signed ssh 
 
 
 ansible-galaxy collection install ansible.posix
